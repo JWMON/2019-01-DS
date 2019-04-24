@@ -79,7 +79,6 @@ pNode push_back(pNode p, int val) {
 
 	pNode pushBack = new Node{val, nullptr};
 	curr->next = pushBack;
-	cout << "hi" << endl;
 	return p;
 }
 
