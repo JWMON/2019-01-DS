@@ -50,6 +50,19 @@ pNode half(pList p) {
 		c = c->next;
 
 	return c;
+
+	/*
+	pNode rabbit = begin(p);
+	pNode turtle = begin(p);
+
+	while(rabbit != end(p) && rabbit->next != end(p)){
+		rabbit = rabbit->next->next;
+		turtle = turtle->next;
+	}
+
+	return turtle;
+}
+	*/
 }
 
 // returns the first node with val found, the tail sentinel node
@@ -155,7 +168,7 @@ void pop_back(pList p) {
 // the value given.
 void pop(pList p, int val) {
 	DPRINT(cout << ">pop val=" << val << endl;);
-	erase(find(p,val));
+	erase(p,find(p,val));
 	DPRINT(cout << "<pop\n";);
 }
 
@@ -170,9 +183,9 @@ void pop_all(pList p, int val) {
 	pNode tmp;
 	for(pNode c = begin(p); c != end(p); c = c->next){
 		if(c->item == val){
-			tmp = c->prev;
+			//tmp = c->prev;
 			erase(c);
-			c = tmp;
+			//c = tmp;
 		}
 	}
 	DPRINT(cout << "<pop_all\n";);
@@ -268,7 +281,6 @@ void reverse(pList p) {
 	// then, swap head and tail.
 	// hint: use while loop, don't use begin()/end()
 
-	cout << "your code here\n";
 	cout << "your code here\n";
 
 	DPRINT(cout << "<reverse\n";);
