@@ -531,8 +531,29 @@ void push_sortedNlog(pList p, int N) {
 	int psize = size(p);
 	int range = N + psize;
 	int* vals = new int[N];
+	int count = 0;
 
-	cout << "your code here\n";
+	pNode curr = begin(p);
+
+	for (int i = 0; i < N; i++) {
+		vals[i] = (rand() * RAND_MAX + rand()) % range;	
+	}
+
+	quickSort(vals, N, ascending);
+
+	while (curr != nullptr) {
+		if (vals[count] <= curr->item) {
+			insert(curr, vals[count]);
+			count++;
+		}
+		else {
+			curr = curr->next;
+		}
+	}
+
+	for (count; count < N; count++) {
+		push_back(p, vals[count]);
+	}
 
 	delete[] vals;
 	DPRINT(cout << "<push_sortedNlog\n";);
