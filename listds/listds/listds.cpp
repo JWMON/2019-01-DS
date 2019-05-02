@@ -318,7 +318,27 @@ void reverse(pList p) {
 	// then, swap head and tail.
 	// hint: use while loop, don't use begin()/end()
 
-	cout << "your code here\n";
+	pNode curr = begin(p);
+	pNode prev = p->head;
+	pNode nTail = p->head;
+
+	while (1) {
+		swap(prev->prev, prev->next);
+		if (curr == p->tail) {
+			swap(curr->prev, curr->next);
+			break;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
+
+	p->head = curr;
+	p->tail = nTail;
+
+	//swap(p->head, nTail);
+	//swap(p->tail, curr);
+
+
 
 	DPRINT(cout << "<reverse\n";);
 }
