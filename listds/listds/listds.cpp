@@ -363,8 +363,30 @@ void shuffle(pList p) {
 	// interleave nodes in the "que" into "mid" in the list of p.
 	// start inserting 1st node in "que" at 2nd node in "mid".
 
-	cout << "your code here\n";
+	pNode mid = half(p);
+	pNode que = begin(p);
 
+	mid->prev->next = nullptr;
+
+	p->head->next = mid;
+	mid->prev = p->head;
+
+	pNode curr = mid->next;
+	pNode prev = mid;
+
+	pNode qCurr = que;
+	pNode qNext = que->next;
+
+	while (1) {
+		qCurr->next = curr;
+		qCurr->prev = prev;
+		curr->prev = curr->prev->next = qCurr;
+		if (curr == end(p) || curr == end(p) && qNext->next == nullptr) break;
+		qCurr = qNext;
+		qNext = qNext->next;
+		prev = curr;
+		curr = curr->next;
+	}
 	DPRINT(cout << "<shuffle\n";);
 }
 
