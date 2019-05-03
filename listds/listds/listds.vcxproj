@@ -81,7 +81,7 @@
     <Link>
       <AdditionalLibraryDirectories>C:\Users\za514\Desktop\2019-1\데이타구조\nowic\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>nowic.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <StackReserveSize>16777217</StackReserveSize>
+      <StackReserveSize>8388608</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -107,7 +107,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Users\za514\Desktop\2019-1\데이타구조\nowic\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>nowic.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <StackReserveSize>16777217</StackReserveSize>
+      <StackReserveSize>8388608</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

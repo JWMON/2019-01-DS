@@ -1,3 +1,9 @@
+/*
+On my honour, I pledge that I have neither received nor provided improper assistance in the completion of this assignment.
+Signed: Joowon Park
+Section: 02
+Student Number: 21600293
+*/
 /**
 * File: listdsx.cpp, listds.h
 *       implements a doubly linked list with sentinel nodes
@@ -381,12 +387,14 @@ void shuffle(pList p) {
 		qCurr->next = curr;
 		qCurr->prev = prev;
 		curr->prev = curr->prev->next = qCurr;
-		if (curr == end(p) || curr == end(p) && qNext->next == nullptr) break;
+		if (curr == end(p) || qNext == nullptr) break;
 		qCurr = qNext;
 		qNext = qNext->next;
 		prev = curr;
 		curr = curr->next;
 	}
+
+
 	DPRINT(cout << "<shuffle\n";);
 }
 
