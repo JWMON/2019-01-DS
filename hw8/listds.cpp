@@ -52,13 +52,6 @@ pNode last(pList p) {
 // For example, for list [0, 1, 2, 3, 4, 5, 6, 7], it returns 4.
 pNode half(pList p) {
 
-	/*pNode c = begin(p);
-	for(int i = 0; i < size(p)/2 + 1; i++)
-		c = c->next;
-
-	return c;*/
-
-	
 	pNode rabbit = begin(p);
 	pNode turtle = begin(p);
 
@@ -69,8 +62,6 @@ pNode half(pList p) {
 
 	return turtle;
 }
-	
-
 
 // returns the first node with val found, the tail sentinel node
 // returned by end(p) if not found. O(n)
@@ -210,7 +201,7 @@ void pop_all(pList p, int val) {
 			c = tmp;
 		}
 	}
-	
+
 }
 
 // deletes N number of nodes, starting from the end.
@@ -299,11 +290,6 @@ void unique(pList p) {
 	pNode tmp;
 	for(pNode c = begin(p); c != end(p); c = c->next)
 		if(c->item == c->prev->item){
-			/*
-			tmp = c->prev;
-			erase(c);
-			c = tmp;
-			*/
 			tmp = c->prev;
 			erase(c);
 			c = tmp;
@@ -340,11 +326,6 @@ void reverse(pList p) {
 
 	p->head = curr;
 	p->tail = nTail;
-
-	//swap(p->head, nTail);
-	//swap(p->tail, curr);
-
-
 
 	DPRINT(cout << "<reverse\n";);
 }
@@ -393,7 +374,6 @@ void shuffle(pList p) {
 		prev = curr;
 		curr = curr->next;
 	}
-
 
 	DPRINT(cout << "<shuffle\n";);
 }
@@ -446,7 +426,7 @@ bool sorted(pList p, int(*comp)(int a, int b)) {
 // inserts a node with val in sorted in the "sorted" list. O(n)
 void push_sorted(pList p, int val) {
 	DPRINT(cout << "<push_sorted val=" << val << endl;);
-	
+
 	if (sorted(p, ascending))
 		insert(_more(p, val), val);
 	else
@@ -469,10 +449,6 @@ void push_sortedN(pList p, int N) {
 	int range = N + psize;
 
 	srand((unsigned)time(NULL));	// initialize random seed
-
-	
-
-
 
 #if 1
 	// O(n^2) implment your code here for O(n^2)
@@ -543,9 +519,8 @@ void push_sortedNlog(pList p, int N) {
 
 	pNode curr = begin(p);
 
-	for (int i = 0; i < N; i++) {
-		vals[i] = (rand() * RAND_MAX + rand()) % range;	
-	}
+	for (int i = 0; i < N; i++)
+		vals[i] = (rand() * RAND_MAX + rand()) % range;
 
 	quickSort(vals, N, ascending);
 
@@ -554,14 +529,12 @@ void push_sortedNlog(pList p, int N) {
 			insert(curr, vals[count]);
 			count++;
 		}
-		else {
+		else
 			curr = curr->next;
-		}
 	}
 
-	for (count; count < N; count++) {
+	for (count; count < N; count++)
 		push_back(p, vals[count]);
-	}
 
 	delete[] vals;
 	DPRINT(cout << "<push_sortedNlog\n";);
