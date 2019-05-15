@@ -62,7 +62,7 @@ int height(tree node) {
 	if (empty(node)) return 0;
 	// compute the depth of each subree and return the larger one.
 
-	return 1;
+	return 0;
 }
 
 // Computes the size of the binary tree dyamically by
