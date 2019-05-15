@@ -41,6 +41,7 @@ Student Number: 21600293
 #include <iostream>
 #include <cassert>
 #include <vector>
+#include <queue>
 #include "tree.h"
 #include "treenode.h"		    // used only in levelorder
 using namespace std;
@@ -62,7 +63,11 @@ int height(tree node) {
 	if (empty(node)) return 0;
 	// compute the depth of each subree and return the larger one.
 
-	return 0;
+	int leftHeight = height(node->left);
+	int rightHeight = height(node->right);
+
+	return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+
 }
 
 // Computes the size of the binary tree dyamically by
@@ -86,19 +91,25 @@ int value(tree t) {
 tree clear(tree t) {
 	if (t == nullptr) return nullptr;
 
-	cout << "your code here\n";
+	clear(t->right);
+	clear(t->left);
+
+	delete t;
 
 	return nullptr;
 }
 
 // does there exist a node with given key?
 // search a key in binary search tree(BST) recursively.
+
+
 bool contains(tree node, int key) {
 	if (empty(node)) return false;
 
-	cout << "your code here\n";
-
-	return true;
+	if (node->key == key) return true;
+	if (key < node->key)
+		return contains(node->left, key);
+	return contains(node->right, key);
 }
 
 // does there exist a node with given key?
@@ -169,7 +180,28 @@ tree trim(tree root, int key) {
 	if (root == nullptr) return root;	 // base case
 	DPRINT(cout << ">trim: now we are at: " << root->key << endl;);
 
-	cout << "your code here\n";
+	if (key < root->key)
+		root->left = trim(root->left, key);
+	else if(key > root->key) 
+		root->right = trim(root->right, key);
+	else {
+
+		if (root->left == nullptr) {
+			tree tmp = root->right;
+			delete root;
+			return tmp;
+		}
+		else if (root->right == nullptr) {
+			tree tmp = root->left;
+			delete root;
+			return tmp;
+		}
+		
+		tree tmp = succ(root);
+		root->key = tmp->key;
+		root->right = trim(root->right, tmp->key);
+	}
+
 
 	DPRINT(if (root != nullptr) cout << "<trim returns: key=" << root->key << endl;);
 	DPRINT(if (root == nullptr) cout << "<trim returns: nullptr)\n";);
@@ -181,7 +213,39 @@ tree trimplus(tree root, int key) {
 	if (root == nullptr) return root;	 // base case
 	DPRINT(cout << ">trimplus: now we are at: " << root->key << endl;);
 
-	cout << "your code here\n";
+	if (key < root->key)
+		root->left = trimplus(root->left, key);
+	else if (key > root->key)
+		root->right = trimplus(root->right, key);
+	else {
+
+		if (root->left == nullptr) {
+			tree tmp = root->right;
+			delete root;
+			return tmp;
+		}
+		else if (root->right == nullptr) {
+			tree tmp = root->left;
+			delete root;
+			return tmp;
+		}
+
+		//tree tmp = height(root->left) < height(root->right) ? succ(root) : pred(root);
+		//root->key = tmp->key;
+		cout << height(root->left) << "\t" << height(root->right) << endl;
+		if (height(root->left) <= height(root->right)) {
+			tree tmp = succ(root);
+			root->key = tmp->key;
+			root->right = trimplus(root->right, tmp->key);
+			cout << "hi" << endl;
+		}
+		else {
+			tree tmp = pred(root);
+			root->key = tmp->key;
+			root->left = trimplus(root->left, tmp->key);
+			cout << "hey" << endl;
+		}
+	}
 
 	DPRINT(if (root != nullptr) cout << "<trimplus returns: key=" << root->key << endl;);
 	DPRINT(if (root == nullptr) cout << "<trimplus returns: nullptr)\n";);
@@ -205,20 +269,32 @@ tree pred(tree node) {
 // Given a binary search tree, return the min or max key in the tree.
 // Don't need to traverse the entire tree.
 tree maximum(tree node) {			// returns max node
-	cout << "your code here\n";
-	return nullptr;
+	
+	if (node->right != nullptr)
+		return maximum(node->right);
+
+	return node;
 }
 
 tree minimum(tree node) {			// returns min node
-	cout << "your code here\n";
-	return nullptr;
+	
+	if (node->left != nullptr)
+		return minimum(node->left);
+
+	return node;
 }
 
 // Given a binary tree, its node values in inorder are passed
 // back through the argument v which is passed by reference.
 void inorder(tree node, vector<int>& v) {
 	DPRINT(cout << ">inorder size=" << v.size() << endl;);
-	cout << "your code here\n";
+	
+	if (node == nullptr) return;
+
+	inorder(node->left, v);
+	v.push_back(node->key);
+	inorder(node->right, v);
+
 	DPRINT(cout << "<inorder key=" << node->key << endl;);
 }
 
@@ -226,7 +302,13 @@ void inorder(tree node, vector<int>& v) {
 // back through the argument v which is passed by reference.
 void postorder(tree node, vector<int>& v) {
 	DPRINT(cout << ">postorder size=" << v.size() << endl;);
-	cout << "your code here\n";
+
+	if (node == nullptr) return;
+	
+	postorder(node->left, v);
+	postorder(node->right, v);
+	v.push_back(node->key);
+
 	DPRINT(cout << "<postorder key=" << node->key << endl;);
 }
 
@@ -234,7 +316,13 @@ void postorder(tree node, vector<int>& v) {
 // back through the argument v which is passed by reference.
 void preorder(tree node, vector<int>& v) {
 	DPRINT(cout << ">preorder size=" << v.size() << endl;);
-	cout << "your code here\n";
+	
+	if (node == nullptr) return;
+
+	v.push_back(node->key);
+	preorder(node->left, v);
+	preorder(node->right, v);
+	
 	DPRINT(cout << "<preorder key=" << node->key << endl;);
 }
 
@@ -243,9 +331,22 @@ void preorder(tree node, vector<int>& v) {
 // Use std::queue to store the nodes during traverse the tree.
 void levelorder(tree node, vector<int>& v) {
 	DPRINT(cout << ">levelorder";);
-	if (node == nullptr) return;
 
-	cout << "your code here\n";
+	if (node == nullptr) return;
+	queue<tree> que;
+
+	que.push(node);
+
+	while (!que.empty()) {
+		tree const tNode = que.front();
+		que.pop();
+		v.push_back(tNode->key);
+		if (tNode->left != nullptr)
+			que.push(tNode->left);
+		if (tNode->right != nullptr)
+			que.push(tNode->right);
+	}
+	
 
 	DPRINT(cout << "<levelorder size=" << v.size() << endl;);
 }
@@ -259,7 +360,11 @@ bool _isBST(tree x, int min, int max) {
 	if (x == nullptr) return true;
 	DPRINT(cout << ">_isBST key=" << x->key << "\t min=" << min << " max=" << max << endl;);
 
-	cout << "your code here\n";
+	if (x->key < min || x->key > max)
+		return 0;
+
+	return
+		_isBST(x->left, min, x->key) && _isBST(x->right, x->key, max);
 
 	DPRINT(cout << "<_isBST key=" << x->key << "\t min=" << min << " max=" << max << endl;);
 	return false;
