@@ -362,7 +362,6 @@ bool _isBST(tree x, int min, int max) {
 
 	if (x->key < min || x->key > max)
 		return 0;
-	//s
 
 	else if(_isBST(x->left, min, x->key) && _isBST(x->right, x->key, max))
 		return 1;
