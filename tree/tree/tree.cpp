@@ -184,6 +184,7 @@ tree trim(tree root, int key) {
 		root->left = trim(root->left, key);
 	else if(key > root->key) 
 		root->right = trim(root->right, key);
+
 	else {
 
 		if (root->left == nullptr) {
@@ -230,20 +231,15 @@ tree trimplus(tree root, int key) {
 			return tmp;
 		}
 
-		//tree tmp = height(root->left) < height(root->right) ? succ(root) : pred(root);
-		//root->key = tmp->key;
-		cout << height(root->left) << "\t" << height(root->right) << endl;
 		if (height(root->left) <= height(root->right)) {
 			tree tmp = succ(root);
 			root->key = tmp->key;
 			root->right = trimplus(root->right, tmp->key);
-			cout << "hi" << endl;
 		}
 		else {
 			tree tmp = pred(root);
 			root->key = tmp->key;
 			root->left = trimplus(root->left, tmp->key);
-			cout << "hey" << endl;
 		}
 	}
 
@@ -363,7 +359,7 @@ bool _isBST(tree x, int min, int max) {
 	if (x->key < min || x->key > max)
 		return 0;
 
-	else if(_isBST(x->left, min, x->key) && _isBST(x->right, x->key, max))
+	else if(_isBST(x->left, min, x->key-1) && _isBST(x->right, x->key+1, max))
 		return 1;
 
 	DPRINT(cout << "<_isBST key=" << x->key << "\t min=" << min << " max=" << max << endl;);
@@ -376,7 +372,8 @@ bool isBST(tree root) {
 
 	int min = value(minimum(root));
 	int max = value(maximum(root));
-	return _isBST(root, min-1, max+1);    // to check the same key add -/+ 1
+
+	return _isBST(root, min, max);    // to check the same key add -/+ 1
 }
 
 ///////////   testing code  ///////////////////////////////////////
@@ -599,7 +596,7 @@ tree growAVL(tree node, int key) {
 	DPRINT(cout << ">growAVL key=" << key << endl;);
 	if (node == nullptr) return new TreeNode(key);
 
-	cout << "your code here\n";
+	
 
 	return nullptr;
 }
