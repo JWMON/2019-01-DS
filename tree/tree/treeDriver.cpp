@@ -29,7 +29,7 @@ void treeprint(tree root);				// print tree on console graphically
 void treeprint_levelorder(tree root);	// print tree in levelorder
 
 // returns a tree built by command-line arguments, for example 5 7 3 8 2 6 4 
-tree build_tree_by_args(int argc, char *argv[], bool AVLtree = true) {
+tree build_tree_by_args(int argc, char *argv[], bool AVLtree ) {
 	if (argc <= 1) return nullptr;
 	tree root = nullptr;
 

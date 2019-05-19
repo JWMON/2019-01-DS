@@ -548,14 +548,28 @@ tree rotateRL(tree node) {
 tree rebalance(tree node) {
 	DPRINT(cout << ">rebalance at:" << node->key << endl;);
 
-	cout << "your code here\n";
+	int bf = balanceFactor(node);
+
+	if (bf >= 2) {
+		if (balanceFactor(node->left) >= 1)
+			node = rotateLL(node);
+		else
+			node = rotateLR(node);
+	}
+
+	else if(bf <= -2){
+		if (balanceFactor(node->right) <= -1)
+			node = rotateRR(node);
+		else
+			node = rotateRL(node);
+	}
+
 
 #ifdef DEBUG
 	treeprint(node);
 	cout << " Need rebalancing at " << node->key << endl;
 #endif
 
-	cout << "your code here\n";
 
 	DPRINT(cout << "<rebalance returning" << endl;);
 	return node;
@@ -596,9 +610,12 @@ tree growAVL(tree node, int key) {
 	DPRINT(cout << ">growAVL key=" << key << endl;);
 	if (node == nullptr) return new TreeNode(key);
 
-	
+	if (key < node->key)	
+		node->left = growAVL(node->left, key);
+	else if (key > node->key)
+		node->right = growAVL(node->right, key);
 
-	return nullptr;
+	return rebalance(node);
 }
 #endif
 
@@ -608,7 +625,7 @@ tree trimAVL(tree node, int key) {
 
 	// step 1 - BST trim as usual
 
-	cout << "your code here\n";
+	trim(node, key);
 
 	// step 2 - get the balance factor of this node
 	DPRINT(if (node != nullptr)
