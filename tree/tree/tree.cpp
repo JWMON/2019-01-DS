@@ -596,7 +596,9 @@ tree rebalanceTree(tree node) { // may need a better solution here
 	DPRINT(cout << ">rebalanceTree " << endl;);
 	if (node == nullptr) return nullptr;
 
-	cout << "your code here\n";
+	vector<int> v;
+	inorder(node, v);
+	tree new_root = buildAVL(v.data(), v.size());
 
 	DPRINT(cout << "<rebalanceTree " << endl;);
 	return node;
