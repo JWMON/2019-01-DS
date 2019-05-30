@@ -229,9 +229,12 @@ bool heapOrderedAt(heap p, int k) {
 	int left  = 2 * k;
 	int right = 2 * k + 1;
 
-	if ((left  <= p->N) && p->comp(p, k, left))  return false;
-	if ((right <= p->N) && p->comp(p, k, right)) return false;
-
+	if (p->comp(p, k, left)) {
+		return false;
+	}
+	if ((right <= p->N) && p->comp(p, k, right)) {
+		return false;
+	}
 	return heapOrderedAt(p, left) && heapOrderedAt(p, right);
 }
 
