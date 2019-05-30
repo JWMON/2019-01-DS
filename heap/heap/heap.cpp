@@ -370,8 +370,13 @@ void growN(heap p, int count, bool heapOrdered) {
 
 	for (int i = 0; i < count; i++) {
 		insertFunc(p, keys[i]);
+		
+#ifdef DEBUG
+		heapprint(p);
+		std::cout << std::endl;
+#endif
 	}
-
+	
 	DPRINT(cout << "<growN" << endl;);
 }
 
@@ -391,6 +396,10 @@ void trimN(heap p, int count, bool heapOrdered) {
 
 	for (int i = 0; i < count; i++) {
 		insertFunc(p);
+#ifdef DEBUG
+		heapprint(p);
+		std::cout << std::endl;
+#endif
 	}
 
 	DPRINT(cout << "<trimN" << endl;);

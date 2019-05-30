@@ -1,2 +1,7 @@
 ﻿  heap.cpp
+  heapDriver.cpp
+  heapprint.cpp
+  treeprint.cpp
+  코드를 생성하고 있습니다...
+nowic.lib(nowic.obj) : warning LNK4099: 'nowic.pdb' PDB를 'nowic.lib(nowic.obj)' 또는 'C:\Users\za514\Desktop\2019-1\2019-01-DS\heap\Debug\nowic.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   heap.vcxproj -> C:\Users\za514\Desktop\2019-1\2019-01-DS\heap\Debug\heap.exe
