@@ -113,6 +113,7 @@ void grow(heap p, int key) {
 
 	if (p->N + 1 == p->capacity) {
 		reserve(p, 2 * p->capacity);
+
 	}
 
 	DPRINT(cout << "<grow N=" << p->N << endl;);
@@ -348,15 +349,22 @@ void randomN(int start, int N, int *arr) {
 // 5. Invoke the function to insert keys in keys[], but one key at a time.
 // 6. Print the heap if DEBUG is defined whenever a node is inserted.
 // 7. Don't forget freeing the array of keys you allocated in Step 3.
+
+
 void growN(heap p, int count, bool heapOrdered) {
 	DPRINT(cout << ">growN" << endl;);
-	int max = empty(p) ? 0 : maximum(p) + 1;
+	int max = empty(p) ? 1 : maximum(p) + 1;
 	void(*insertFunc)(heap h, int key) = heapOrdered ? grow : growCBT;
 
+// if heap is empty, growN(10) should result in range 1~10
+// for heap 1~10, calling growN(10) again should result in range 11~20
+// if heap is empty, growN(1) should result in 1
+// for heap 1~10, and for any other occpuied heaps, growN(1) should work in such manner that result in range 1~11
+
 	int* keys = new int[count];
-	
-	randomN(max + 1, max + count, keys);
-	
+	if (count <= 1) keys[count-1] = max;
+	randomN(max, count, keys);
+
 	for (int i = 0; i < count; i++) {
 		insertFunc(p, keys[i]);
 	}
