@@ -150,7 +150,6 @@ void DFSbigraph(graph g, int v) {	// DFS
 			DFSbigraph(g, w->item);
 		}
 
-
 		DPRINT(cout << "  set vertex=" << w->item << " color=" << !g->color[v] << endl;);
 													// recur DFSbigraph() at the vertex
 	}
@@ -170,18 +169,10 @@ bool bigraph_check(graph g) {         // graph5~9.txt are bigraphs.
 
 	// check the validity of two-coloring which is saved in g->color[].
 
-	/*
-	for(int i = 0; i < V(g); i++)
-		if(!g->marked[i])
-			if(!DFSbigraph(g, i))
-				return false;
-	*/
-
 	for(int i = 0; i < V(g); i++)
 		for(gnode w = g->adj[i].next; w; w = w->next)
 			if(g->color[w->item] == g->color[i])
 				return false;
-
 
 	DPRINT(cout << "<bigraph_check true\n";);
 	return true;
