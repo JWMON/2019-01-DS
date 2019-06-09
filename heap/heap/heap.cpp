@@ -5,7 +5,7 @@ Section: 02
 Student Number: 21600293
 */
 /*
-* Files: heap.cpp, heap.h, heapDriver.cpp - min/maxheap 
+* Files: heap.cpp, heap.h, heapDriver.cpp - min/maxheap
 *        heapv.cpp, heapv.h, heapvDriver.cpp - using std::vector
 *  implements a max/min heap that is used to represent a priority queue.
 *
@@ -57,6 +57,7 @@ void clear(heap p) {
 	if (empty(p)) return;
 	delete[] p->nodes;
 	return;
+	
 }
 
 // returns the number of items in heap
@@ -107,7 +108,7 @@ void reserve(heap p, int capa) {
 // inserts a new key to the max-heap or min-heap.
 void grow(heap p, int key) {
 	DPRINT(cout << ">grow key=" << key << endl;);
-	
+
 	p->nodes[++p->N] = key;
 	swim(p, p->N);
 
@@ -222,7 +223,7 @@ void sink(heap p, int k) {
 *  Check integrity of maxheap data structure
 *************************************************************************/
 
-// is this[1..N] max-heap ordered at a node k? 
+// is this[1..N] max-heap ordered at a node k?
 bool heapOrderedAt(heap p, int k) {
 	if (k > p->N / 2) return true;// check it upto the last internal node.
 
@@ -238,7 +239,7 @@ bool heapOrderedAt(heap p, int k) {
 	return heapOrderedAt(p, left) && heapOrderedAt(p, right);
 }
 
-// is this[1..N] heap ordered? 
+// is this[1..N] heap ordered?
 bool heapOrdered(heap p) {
 	if (empty(p)) return false;
 	return heapOrderedAt(p, 1);
@@ -301,7 +302,7 @@ void growCBT(heap p, int key) {
 // if the size becomes 1/4 of the capacity, reserve it in half.
 void trimCBT(heap p) {
 	DPRINT(cout << ">trimCBT " << endl;);
-	
+
 	p->N--;
 
 	if (p->N+1 == 1 / 4 * p->capacity)
@@ -370,13 +371,13 @@ void growN(heap p, int count, bool heapOrdered) {
 
 	for (int i = 0; i < count; i++) {
 		insertFunc(p, keys[i]);
-		
+
 #ifdef DEBUG
 		heapprint(p);
 		std::cout << std::endl;
 #endif
 	}
-	
+
 	DPRINT(cout << "<growN" << endl;);
 }
 
