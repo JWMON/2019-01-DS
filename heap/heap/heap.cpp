@@ -57,7 +57,6 @@ void clear(heap p) {
 	if (empty(p)) return;
 	delete[] p->nodes;
 	return;
-	
 }
 
 // returns the number of items in heap
